@@ -22,9 +22,9 @@ remote="origin"
 if [ -n "$1" ]; then
   if [ "$1" == "issue" ]; then
     currentBranch=$(git symbolic-ref -q --short HEAD)
-    regex='^issue'
+    regex='[0-9]*_'
     if [[ $currentBranch =~ $regex ]]; then
-      issue=${currentBranch#*#}
+      issue=${currentBranch%%_*}
     else
       echo "'git open issue' expect branch naming to be issues/#123" 1>&2
       exit 1
@@ -146,5 +146,5 @@ case $( uname -s ) in
 esac
 
 # open it in a browser
-$open "$giturl" &> /dev/null
+google-chrome "$giturl" &> /dev/null
 exit $?
